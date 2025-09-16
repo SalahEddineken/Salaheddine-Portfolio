@@ -1,5 +1,6 @@
-// Removed direct imports from ../assets to avoid import-time failures.
-// Use null or empty-string placeholders for icons/images so the file never throws.
+import { python, c, cpp, java } from '../assets';
+import { weatherpedia, termpw, payloadmaster, mhft, sketcher, CompileVortex } from '../assets';
+import { mathwork, edunet, eduskill } from '../assets';
 
 export const navLinks = [
   {
@@ -17,17 +18,17 @@ export const navLinks = [
 ];
 
 export const services = [
-  { title: "Python", icon: "/src/assets/tech-stack/python.png" },
-  { title: "C", icon: "/src/assets/tech-stack/c.png" },
-  { title: "C++", icon: "/src/assets/tech-stack/cpp.png" },
-  { title: "Java", icon: "/src/assets/tech-stack/java.png" },
+  { title: "Python", icon: python },
+  { title: "C", icon: c },
+  { title: "C++", icon: cpp },
+  { title: "Java", icon: java },
 ];
 
 export const experiences = [
   {
     title: "Database Administrator",
     company_name: "INSFP - Martyr Larbi Ben M'hidi | Mila",
-    icon: "/src/assets/company/mathwork.png",
+    icon: mathwork,
     iconBg: "#161329",
     date: "Feb 2025 - July 2025",
     points: [
@@ -40,7 +41,7 @@ export const experiences = [
   {
     title: "Data Management Intern",
     company_name: "EURL Montiko | Chelghoum Laid",
-    icon: "/src/assets/company/edunet.png",
+    icon: edunet,
     iconBg: "#161329",
     date: "May 2024 - Jan 2025",
     points: [
@@ -52,7 +53,7 @@ export const experiences = [
   {
     title: "Data Management Intern",
     company_name: "Bloomsbury Publishing Plc | London (Remote)",
-    icon: "/src/assets/company/eduskill.png",
+    icon: eduskill,
     iconBg: "#161329",
     date: "June 2022 - Jan 2023",
     points: [
@@ -74,7 +75,7 @@ export const projects = [
       { name: "bootstrap 5.3.0", color: "pink-text-gradient" },
       { name: "Weather API by API Ninjas", color: "yellow-text-gradient" },
     ],
-    image: "/src/assets/projects/WeatherPedia.png",
+    image: weatherpedia,
     source_code_link: "https://github.com/lohitkolluri/WeatherPedia",
   },
   {
@@ -86,7 +87,7 @@ export const projects = [
       { name: "CSS", color: "green-text-gradient" },
       { name: "Javascript", color: "pink-text-gradient" },
     ],
-    image: "/src/assets/projects/termpw.png",
+    image: termpw,
     source_code_link: "https://github.com/lohitkolluri/lohitkolluri.github.io",
   },
   {
@@ -98,7 +99,7 @@ export const projects = [
       { name: "Jupyter Notebook", color: "green-text-gradient" },
       { name: "Regression Algorithms", color: "pink-text-gradient" },
     ],
-    image: "/src/assets/projects/mhft.png",
+    image: mhft,
     source_code_link:
       "https://github.com/lohitkolluri/mental_health_fitness_tracker",
   },
@@ -107,7 +108,7 @@ export const projects = [
     description:
       "Tool to automate payload creation using the Metasploit framework",
     tags: [{ name: "Shell", color: "blue-text-gradient" }],
-    image: "/src/assets/projects/payloadmaster.png",
+    image: payloadmaster,
     source_code_link: "https://github.com/lohitkolluri/PayloadMaster",
   },
   {
@@ -119,7 +120,7 @@ export const projects = [
       { name: "CSS", color: "green-text-gradient" },
       { name: "HTML", color: "pink-text-gradient" },
     ],
-    image: "/src/assets/projects/CompileVortex.png",
+    image: CompileVortex,
     source_code_link: "https://github.com/lohitkolluri/CompileVortex",
   },
   {
@@ -131,7 +132,7 @@ export const projects = [
       { name: "Matplotlib", color: "green-text-gradient" },
       { name: "Python", color: "pink-text-gradient" },
     ],
-    image: "/src/assets/projects/sketcher.png",
+    image: sketcher,
     source_code_link: "https://github.com/lohitkolluri/Image_to_Pencil_Sketch_App",
   },
 ];
