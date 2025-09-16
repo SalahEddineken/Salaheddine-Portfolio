@@ -1,14 +1,10 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 import "../index.css";
-
-// Initialize EmailJS (you can replace these with your own EmailJS credentials)
-emailjs.init("p-gXzzyvEhPaJ0XA-");
 
 const InputField = ({ label, value, onChange, placeholder, name, type }) => (
   <label className="flex flex-col">
@@ -74,49 +70,45 @@ const Contact = () => {
 
     setLoading(true);
 
-    // Create a mailto link as fallback if EmailJS fails
-    const mailtoLink = `mailto:salaheddine.kennouda@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=Name: ${encodeURIComponent(form.name)}%0AEmail: ${encodeURIComponent(form.email)}%0A%0AMessage:%0A${encodeURIComponent(form.message)}`;
+    // Create a mailto link that opens the user's default email client
+    const subject = `Portfolio Contact from ${encodeURIComponent(form.name)}`;
+    const body = `Name: ${encodeURIComponent(form.name)}%0AEmail: ${encodeURIComponent(form.email)}%0A%0AMessage:%0A${encodeURIComponent(form.message)}`;
+    const mailtoLink = `mailto:salaheddine.kennouda@gmail.com?subject=${subject}&body=${body}`;
 
-    // Try EmailJS first, but provide fallback
-    emailjs
-      .send(
-        "service_r2i0by4",
-        "template_mf5x3bh",
-        {
-          from_name: form.name,
-          to_name: "Salaheddine Kennouda",
-          from_email: form.email,
-          to_email: "salaheddine.kennouda@gmail.com",
-          message: form.message,
-        },
-        "p-gXzzyvEhPaJ0XA-"
-      )
-      .then(
-        () => {
-          setLoading(false);
-          setConfirmation("Thank you! I will get back to you as soon as possible.");
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
-        }
-      )
-      .catch((error) => {
-        setLoading(false);
-        console.error("EmailJS error:", error);
-        
-        // Fallback: Open default email client or show contact info
-        setConfirmation("Email service unavailable. Please contact me directly at: salaheddine.kennouda@gmail.com");
-        
-        // Also provide a copy-to-clipboard option
-        const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}`;
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(contactInfo).then(() => {
-            setConfirmation("Email service unavailable. Contact info copied to clipboard: salaheddine.kennouda@gmail.com");
-          });
-        }
+    // Also prepare contact info for clipboard
+    const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}\n\nPlease reply to: ${form.email}`;
+
+    // Simulate sending process
+    setTimeout(() => {
+      setLoading(false);
+      
+      // Try to copy to clipboard first
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(contactInfo).then(() => {
+          setConfirmation("✅ Message copied to clipboard! Opening your email client...");
+          setTimeout(() => {
+            window.open(mailtoLink, '_self');
+          }, 1000);
+        }).catch(() => {
+          setConfirmation("📧 Opening your email client...");
+          setTimeout(() => {
+            window.open(mailtoLink, '_self');
+          }, 1000);
+        });
+      } else {
+        setConfirmation("📧 Opening your email client...");
+        setTimeout(() => {
+          window.open(mailtoLink, '_self');
+        }, 1000);
+      }
+
+      // Clear the form
+      setForm({
+        name: "",
+        email: "",
+        message: "",
       });
+    }, 1500);
   };
 
   return (
@@ -124,8 +116,19 @@ const Contact = () => {
       <motion.div variants={slideIn("up", "tween", 0.2, 1)} className="flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-2xl w-full">
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact Me</h3>
+        
+        {/* Direct Contact Info */}
+        <div className="mt-6 mb-8 p-4 bg-tertiary rounded-xl">
+          <p className="text-white text-center mb-2">📧 Direct Contact</p>
+          <p className="text-secondary text-center">
+            Email: <span className="text-white">salaheddine.kennouda@gmail.com</span>
+          </p>
+        </div>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
+        <p className="text-secondary text-center mb-4">
+          Or use the form below to compose your message
+        </p>
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-8">
           <InputField
             label="Your Name"
             name="name"
