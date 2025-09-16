@@ -1,5 +1,5 @@
 import { python, c, cpp, java } from '../assets';
-import { weatherpedia, termpw, payloadmaster, mhft, sketcher, CompileVortex } from '../assets';
+import { weatherpedia, mhft, CompileVortex } from '../assets';
 import { mathwork, edunet, eduskill } from '../assets';
 
 export const navLinks = [
@@ -79,18 +79,6 @@ export const projects = [
     source_code_link: "https://github.com/lohitkolluri/WeatherPedia",
   },
   {
-    name: "Terminal Like Portfolio Website",
-    description:
-      "A terminal themed portfolio website that allows users to type into the terminal and use commands like a real terminal.",
-    tags: [
-      { name: "HTML", color: "blue-text-gradient" },
-      { name: "CSS", color: "green-text-gradient" },
-      { name: "Javascript", color: "pink-text-gradient" },
-    ],
-    image: termpw,
-    source_code_link: "https://github.com/lohitkolluri/lohitkolluri.github.io",
-  },
-  {
     name: "Mental Health Fitness Tracker",
     description:
       "ML model that utilizes regression techniques to provide insights into mental health and make predictions based on the available data.",
@@ -104,14 +92,6 @@ export const projects = [
       "https://github.com/lohitkolluri/mental_health_fitness_tracker",
   },
   {
-    name: "PayloadMaster",
-    description:
-      "Tool to automate payload creation using the Metasploit framework",
-    tags: [{ name: "Shell", color: "blue-text-gradient" }],
-    image: payloadmaster,
-    source_code_link: "https://github.com/lohitkolluri/PayloadMaster",
-  },
-  {
     name: "CompileVortex",
     description:
       "A web-based code compilation platform that supports multiple programming languages and provides real-time compilation results.",
@@ -122,18 +102,6 @@ export const projects = [
     ],
     image: CompileVortex,
     source_code_link: "https://github.com/lohitkolluri/CompileVortex",
-  },
-  {
-    name: "Sketcher",
-    description:
-      "Convert an input image to a pencil sketch using OpenCV and Matplotlib libraries.",
-    tags: [
-      { name: "OpenCV", color: "blue-text-gradient" },
-      { name: "Matplotlib", color: "green-text-gradient" },
-      { name: "Python", color: "pink-text-gradient" },
-    ],
-    image: sketcher,
-    source_code_link: "https://github.com/lohitkolluri/Image_to_Pencil_Sketch_App",
   },
 ];
 
