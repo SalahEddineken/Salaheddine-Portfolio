@@ -7,6 +7,9 @@ import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 import "../index.css";
 
+// Initialize EmailJS (you can replace these with your own EmailJS credentials)
+emailjs.init("p-gXzzyvEhPaJ0XA-");
+
 const InputField = ({ label, value, onChange, placeholder, name, type }) => (
   <label className="flex flex-col">
     <span className="text-white font-medium mb-4">{label}</span>
@@ -31,6 +34,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
+  const [messageError, setMessageError] = useState("");
   const [confirmation, setConfirmation] = useState("");
 
   const handleChange = (e) => {
@@ -50,6 +54,7 @@ const Contact = () => {
     e.preventDefault();
     setEmailError("");
     setNameError("");
+    setMessageError("");
     setConfirmation("");
 
     if (!validateEmail(form.email)) {
@@ -62,8 +67,17 @@ const Contact = () => {
       return;
     }
 
+    if (!form.message.trim()) {
+      setMessageError("Please enter a message.");
+      return;
+    }
+
     setLoading(true);
 
+    // Create a mailto link as fallback if EmailJS fails
+    const mailtoLink = `mailto:salaheddine.kennouda@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=Name: ${encodeURIComponent(form.name)}%0AEmail: ${encodeURIComponent(form.email)}%0A%0AMessage:%0A${encodeURIComponent(form.message)}`;
+
+    // Try EmailJS first, but provide fallback
     emailjs
       .send(
         "service_r2i0by4",
@@ -81,7 +95,6 @@ const Contact = () => {
         () => {
           setLoading(false);
           setConfirmation("Thank you! I will get back to you as soon as possible.");
-
           setForm({
             name: "",
             email: "",
@@ -91,8 +104,18 @@ const Contact = () => {
       )
       .catch((error) => {
         setLoading(false);
-        console.error(error);
-        setConfirmation("Something went wrong. Please try again. :/");
+        console.error("EmailJS error:", error);
+        
+        // Fallback: Open default email client or show contact info
+        setConfirmation("Email service unavailable. Please contact me directly at: salaheddine.kennouda@gmail.com");
+        
+        // Also provide a copy-to-clipboard option
+        const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}`;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(contactInfo).then(() => {
+            setConfirmation("Email service unavailable. Contact info copied to clipboard: salaheddine.kennouda@gmail.com");
+          });
+        }
       });
   };
 
@@ -123,14 +146,18 @@ const Contact = () => {
           />
           {emailError && <span className="text-red-500">{emailError}</span>}
 
-          <InputField
-            label="Your Message"
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            placeholder="What you want to say...?"
-            type="text"
-          />
+          <label className="flex flex-col">
+            <span className="text-white font-medium mb-4">Your Message</span>
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              placeholder="What you want to say...?"
+              rows="4"
+              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium resize-none"
+            />
+          </label>
+          {messageError && <span className="text-red-500">{messageError}</span>}
 
           <button
             type="submit"
