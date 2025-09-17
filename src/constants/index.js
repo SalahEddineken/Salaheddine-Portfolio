@@ -19,9 +19,9 @@ export const navLinks = [
 
 export const services = [
   { title: "Python", icon: python },
-  { title: "C", icon: c },
-  { title: "C++", icon: cpp },
-  { title: "Java", icon: java },
+  { title: "Tableau", icon: c },
+  { title: "Power BI", icon: cpp },
+  { title: "SQL", icon: java },
 ];
 
 export const experiences = [
@@ -66,42 +66,45 @@ export const experiences = [
 
 export const projects = [
   {
-    name: "WeatherPedia",
+    name: "The Sahara Superpower: Algeria's Solar Potential",
     description:
-      "Web-based platform that allows users to access weather information for their location by entering it in the search field",
+      "A comprehensive data analysis project exploring the immense solar energy potential of Algeria’s southern regions—Adrar, Tamanrasset, and Illizi—by integrating geospatial data, solar irradiance metrics, and regional infrastructure insights to highlight opportunities for sustainable energy development.",
     tags: [
-      { name: "Javascript", color: "blue-text-gradient" },
-      { name: "HTML", color: "green-text-gradient" },
-      { name: "bootstrap 5.3.0", color: "pink-text-gradient" },
-      { name: "Weather API by API Ninjas", color: "yellow-text-gradient" },
+      { name: "Geospatial Data", color: "green-text-gradient" },
+      { name: "Python", color: "green-text-gradient" },
+      { name: "Power BI", color: "pink-text-gradient" },
+      { name: "SQL", color: "yellow-text-gradient" },
     ],
     image: weatherpedia,
-    source_code_link: "https://github.com/lohitkolluri/WeatherPedia",
+    source_code_link: "https://salaheddineken.github.io/Algeria-s-Solar-Potentia/",
+    github_link: "https://github.com/salaheddinekennouda/Algeria-s-Solar-Potential",
   },
   {
-    name: "Mental Health Fitness Tracker",
+    name: "Algeria's 2020 COVID-19 Pandemic",
     description:
-      "ML model that utilizes regression techniques to provide insights into mental health and make predictions based on the available data.",
+      "A data analysis project that explores the COVID-19 pandemic in Algeria during 2020, examining trends in cases, deaths, and hospitalizations to inform public health strategies.",
     tags: [
-      { name: "Machine Learning", color: "blue-text-gradient" },
-      { name: "Jupyter Notebook", color: "green-text-gradient" },
-      { name: "Regression Algorithms", color: "pink-text-gradient" },
+      { name: "SQL", color: "blue-text-gradient" },
+      { name: "Python", color: "green-text-gradient" },
+      { name: "Power BI", color: "pink-text-gradient" },
     ],
     image: mhft,
-    source_code_link:
-      "https://github.com/lohitkolluri/mental_health_fitness_tracker",
+    source_code_link:"https://salaheddineken.github.io/COVID-19-in-Algeria-2020-/",
+    github_link: "https://github.com/salaheddinekennouda/Algeria-s-2020-COVID-19-Pandemic",
   },
   {
-    name: "CompileVortex",
+    name: "GTA VI Success Forecast",
     description:
-      "A web-based code compilation platform that supports multiple programming languages and provides real-time compilation results.",
+      "A data analysis project that explores the success of the GTA VI game, examining trends in sales, reviews, and player engagement to inform marketing strategies.",
     tags: [
-      { name: "Javascript", color: "blue-text-gradient" },
-      { name: "CSS", color: "green-text-gradient" },
-      { name: "HTML", color: "pink-text-gradient" },
+      { name: "SQL", color: "blue-text-gradient" },
+      { name: "Tableau", color: "green-text-gradient" },
+      { name: "Python", color: "pink-text-gradient" },
+
     ],
     image: CompileVortex,
-    source_code_link: "https://github.com/lohitkolluri/CompileVortex",
+    source_code_link: "https://salaheddineken.github.io/A-Data-Driven-Prediction-for-GTA-VI/",
+    github_link: "https://github.com/salaheddinekennouda/A-Data-Driven-Prediction-for-GTA-VI",
   },
 ];
 

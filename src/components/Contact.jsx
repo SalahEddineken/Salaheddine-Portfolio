@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from '@emailjs/browser';
 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
@@ -32,6 +33,11 @@ const Contact = () => {
   const [nameError, setNameError] = useState("");
   const [messageError, setMessageError] = useState("");
   const [confirmation, setConfirmation] = useState("");
+
+  // EmailJS configuration - Replace these with your actual values
+  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_6q6533a";
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_iz2lbvu";
+  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "ciFMkg3BzB_QqaY3s";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,50 +76,43 @@ const Contact = () => {
 
     setLoading(true);
 
-    // Create a mailto link that opens the user's default email client
-    const subject = `Portfolio Contact from ${encodeURIComponent(form.name)}`;
-    const body = `Name: ${encodeURIComponent(form.name)}%0AEmail: ${encodeURIComponent(form.email)}%0A%0AMessage:%0A${encodeURIComponent(form.message)}`;
-    const mailtoLink = `mailto:salaheddine.kennouda@gmail.com?subject=${subject}&body=${body}`;
+    // Initialize EmailJS with your public key
+    emailjs.init(PUBLIC_KEY);
 
-    // Also prepare contact info for clipboard
-    const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nMessage: ${form.message}\n\nPlease reply to: ${form.email}`;
-
-    // Simulate sending process
-    setTimeout(() => {
+    // Send email using EmailJS
+    emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name: form.name,
+        to_name: "Salaheddine Kennouda",
+        from_email: form.email,
+        to_email: "salaheddinekennouda@gmail.com",
+        message: form.message,
+      },
+      PUBLIC_KEY
+    )
+    .then(() => {
       setLoading(false);
+      setConfirmation("✅ Message sent successfully! I'll get back to you soon.");
       
-      // Try to copy to clipboard first
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(contactInfo).then(() => {
-          setConfirmation("✅ Message copied to clipboard! Opening your email client...");
-          setTimeout(() => {
-            window.open(mailtoLink, '_self');
-          }, 1000);
-        }).catch(() => {
-          setConfirmation("📧 Opening your email client...");
-          setTimeout(() => {
-            window.open(mailtoLink, '_self');
-          }, 1000);
-        });
-      } else {
-        setConfirmation("📧 Opening your email client...");
-        setTimeout(() => {
-          window.open(mailtoLink, '_self');
-        }, 1000);
-      }
-
       // Clear the form
       setForm({
         name: "",
         email: "",
         message: "",
       });
-    }, 1500);
+    })
+    .catch((error) => {
+      setLoading(false);
+      console.error('EmailJS Error:', error);
+      setConfirmation("❌ Failed to send message. Please try again or email me directly at salaheddinekennouda@gmail.com");
+    });
   };
 
   return (
-    <div className={`xl:mt-12 flex justify-center`}>
-      <motion.div variants={slideIn("up", "tween", 0.2, 1)} className="flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-2xl w-full">
+    <div className={`xl:mt-12 flex justify-start w-full`}>
+      <motion.div variants={slideIn("up", "tween", 0.2, 1)} className="flex-1 bg-black-100 p-8 rounded-2xl max-w-3xl w-full">
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact Me</h3>
         
@@ -121,12 +120,12 @@ const Contact = () => {
         <div className="mt-6 mb-8 p-4 bg-tertiary rounded-xl">
           <p className="text-white text-center mb-2">📧 Direct Contact</p>
           <p className="text-secondary text-center">
-            Email: <span className="text-white">salaheddine.kennouda@gmail.com</span>
+            Email: <a href="mailto:salaheddinekennouda@gmail.com" className="text-white underline">salaheddinekennouda@gmail.com</a>
           </p>
         </div>
 
         <p className="text-secondary text-center mb-4">
-          Or use the form below to compose your message
+          Send me a message directly using the form below
         </p>
         <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-8">
           <InputField

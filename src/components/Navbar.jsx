@@ -61,13 +61,49 @@ const Navbar = () => {
               window.scrollTo(0, 0);
             }}
           >
-            <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
             <p className="text-white text-[20px] font-bold cursor-pointer flex">
-              LOHIT&nbsp;
-              <span className="sm:block hidden">KOLLURI</span>
+              Salaheddine&nbsp;
+              <span className="sm:block hidden">Kennouda</span>
             </p>
           </Link>
-          {renderNavLinks(false)}
+          <ul className="hidden sm:flex flex-row gap-10">
+            {navLinks.map((link, idx) => (
+              <React.Fragment key={link.id}>
+                <li>
+                  <a
+                    href={`#${link.id}`}
+                    className={`${
+                      active === link.title ? 'text-white' : 'text-secondary'
+                    } hover:text-white text-[20px] font-medium cursor-pointer`}
+                    onClick={() => setActive(link.title)}
+                  >
+                    {link.title}
+                  </a>
+                </li>
+                {/* Insert Projects nav item right after Work */}
+                {link.title === "Work" && (
+                  <li>
+                    <a
+                      href="#projects"
+                      className={`${
+                        active === "Projects" ? "text-white" : "text-secondary"
+                      } hover:text-white text-[20px] font-medium cursor-pointer`}
+                      onClick={() => {
+                        setActive("Projects");
+                        const el = document.getElementById("projects");
+                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      Projects
+                    </a>
+                  </li>
+                )}
+              </React.Fragment>
+            ))}
+            <li className="text-white hover:text-secondary text-[20px] font-medium cursor-pointer">
+              <button onClick={toggleResume}>Resume</button>
+            </li>
+          </ul>
           <div className="sm:hidden flex flex-1 justify-end items-center">
             <img
               src={toggle ? close : menu}
